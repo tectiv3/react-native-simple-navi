@@ -148,18 +148,16 @@ class BarContent extends React.Component {
         if (this.props.route.hideNavigationBar) {
             return (
                 <Animated.View style={[styles.navbar, this.props.route.headerStyle, transitionStyle, {borderBottomWidth:0}]}>
-
                 </Animated.View>
             );
         }
         var leftBarItem, leftBarItemContent = null;
         if (this.props.route.leftBarItem) {
             let LeftComponent = this.props.route.leftBarItem;
-            leftBarItemContent = <LeftComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} {...this.props.leftProps}/>;
+            leftBarItemContent = <LeftComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} buttonStyle={this.props.buttonStyle} {...this.props.leftProps}/>;
         } else if(this.props.route.index > 0) {
-            leftBarItemContent = <NavigationButton barItemType={NavButton.BUTTON_IMAGE_ONLY} barItemImage={require('./icon_back.png')} onPress={()=>this.goBack()} imageStyle={this.props.buttonStyle}/>;
+            leftBarItemContent = <NavigationButton barItemType={NavButton.BUTTON_IMAGE_ONLY} barItemImage={require('./icon_back.png')} onPress={()=>this.goBack()} buttonStyle={this.props.buttonStyle}/>;
         }
-
         leftBarItem = (
             <View style={[styles.barItem, styles.alignLeft]}>
                 {leftBarItemContent}
@@ -171,7 +169,7 @@ class BarContent extends React.Component {
         if (this.props.route.rightBarItem) {
             let RightComponent = this.props.route.rightBarItem;
             let rightProps = this.props.route.rightProps || this.props.rightProps;
-            rightBarItemContent = (<RightComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} {...rightProps}/>);
+            rightBarItemContent = (<RightComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} buttonStyle={this.props.buttonStyle} {...rightProps}/>);
         }
         rightBarItem = (
             <View style={[styles.barItem, styles.alignRight]}>
