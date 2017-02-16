@@ -4,6 +4,7 @@ import React from 'react';
 
 import NavigationBar from './NavigationBar';
 import NavStyles from './styles';
+import NavigationButton from './NavigationButton'
 
 import {
     StyleSheet,
@@ -36,8 +37,6 @@ export default class NavigationController extends React.Component {
         });
     }
     componentWillReceiveProps(newProps) {
-        // console.log("old props: ", this.props);
-        // console.log("new props: ", newProps);
         if (this.props.initialRoute.component != newProps.initialRoute.component) {
             this.resetTo(newProps.initialRoute);
         }
@@ -75,11 +74,19 @@ export default class NavigationController extends React.Component {
     }
 
     setRightProps(props) {
-        this.setState({rightProps: props});
+        let route = {...this.state.route, rightProps: props};
+        let currentRoute = this._navigator.getCurrentRoutes();
+        currentRoute[currentRoute.length - 1].rightProps = props;
+        this.routeStack[this.routeStack.length - 1].rightProps = props;
+        this.setState({route});
     }
 
     setLeftProps(props) {
-        this.setState({leftProps: props});
+        let route = {...this.state.route, leftProps: props};
+        let currentRoute = this._navigator.getCurrentRoutes();
+        currentRoute[currentRoute.length - 1].leftProps = props;
+        this.routeStack[this.routeStack.length - 1].leftProps = props;
+        this.setState({route});
     }
 
     setTitleProps(props) {
@@ -113,6 +120,26 @@ export default class NavigationController extends React.Component {
         let route = {...this.state.route, leftBarItem: barItem};
         this.routeStack[this.routeStack.length - 1] = route;
         this.setState({route: route});
+    }
+
+    setLeftBarButton(props) {
+        let route = {...this.state.route, leftBarItem: NavigationButton, leftProps: props};
+        let currentRoute = this._navigator.getCurrentRoutes();
+        currentRoute[currentRoute.length - 1].leftBarItem = NavigationButton;
+        this.routeStack[this.routeStack.length - 1].leftBarItem = NavigationButton;
+        currentRoute[currentRoute.length - 1].leftProps = props;
+        this.routeStack[this.routeStack.length - 1].leftProps = props;
+        this.setState({route});
+    }
+
+    setRightBarButton(props) {
+        let route = {...this.state.route, rightBarItem: NavigationButton, rightProps: props};
+        let currentRoute = this._navigator.getCurrentRoutes();
+        currentRoute[currentRoute.length - 1].rightBarItem = NavigationButton;
+        this.routeStack[this.routeStack.length - 1].rightBarItem = NavigationButton;
+        currentRoute[currentRoute.length - 1].rightProps = props;
+        this.routeStack[this.routeStack.length - 1].rightProps = props;
+        this.setState({route});
     }
 
     setTitleBarItem(barItem) {
@@ -274,11 +301,9 @@ export default class NavigationController extends React.Component {
                                buttonStyle={this.props.buttonStyle}
                                textStyle={this.props.textStyle}
                                currentRoute={this.state.route}
-                               rightBarItem={this.props.rightBarItem}
-                               leftBarItem={this.props.leftBarItem}
-                               titleBarItem={this.props.titleBarItem}
-                               leftProps={this.state.leftProps}
-                               rightProps={this.state.rightProps}
+                               rightBarItem={this.state.route.rightBarItem}
+                               leftBarItem={this.state.route.leftBarItem}
+                               titleBarItem={this.state.route.titleBarItem}
                                titleProps={this.state.titleProps}
                                goForward={this.onForward.bind(this)}
                                goBack={this.onBack.bind(this)}
@@ -300,43 +325,13 @@ export default class NavigationController extends React.Component {
     }
 }
 
-NavigationController.defaultProps = {
-
-};
-
-NavigationController.propTypes={
-    /**
-     * 初始路由
-     */
-    initalRoute: React.PropTypes.object, // {title, component, sceneConfig}
-
-    /**
-     * 导航栏样式
-     */
+NavigationController.propTypes = {
+    initalRoute: React.PropTypes.object,
     navbarStyle: View.propTypes.style,
-    /**
-     * 内容页样式
-     */
     itemWrapperStyle: View.propTypes.style,
-    /**
-     * 导航栏标题样式
-     */
-    //titleStyle: View.propTypes.style,
-
-    /**
-     * 右边按钮, component
-     */
     rightBarItem: React.PropTypes.element,
-    /**
-     * 左边按钮, component
-     */
     leftBarItem: React.PropTypes.element,
-    /**
-     * 中间标题, component
-     */
     titleBarItem: React.PropTypes.element,
-
-
 };
 
 var styles = Object.assign({}, NavStyles);

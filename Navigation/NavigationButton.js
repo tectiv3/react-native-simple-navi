@@ -14,7 +14,7 @@ import {
 export const BUTTON_TEXT_ONLY = 'text';
 export const BUTTON_IMAGE_ONLY = 'icon';
 
-class NavigationButton extends Component {
+export default class NavigationButton extends Component {
 
     static defaultProps = {
         barItemType: 'text',
@@ -84,5 +84,3 @@ var styles = StyleSheet.create({
         margin: 10
     }
 });
-
-export default NavigationButton;
