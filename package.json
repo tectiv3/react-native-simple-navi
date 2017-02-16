@@ -1,6 +1,6 @@
 {
-  "name": "react-native-yynavigator",
-  "version": "0.0.17",
+  "name": "react-native-simple-navi",
+  "version": "0.0.1",
   "description": "custom navigation bar for react-native",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yiyangest/react-native-yynavigator.git"
+    "url": "git+https://github.com/tectiv3/react-native-simple-navi.git"
   },
   "keywords": [
     "navigator",
     "react-native"
   ],
-  "author": "yiyangest",
-  "license": "MIT"
+  "authors": "yiyangest, tectiv3",
+  "license": "GPL-3.0"
 }

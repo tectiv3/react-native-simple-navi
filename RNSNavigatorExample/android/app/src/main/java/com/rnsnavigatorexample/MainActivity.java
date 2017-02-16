@@ -1,4 +1,4 @@
-package com.yynavigatorexample;
+package com.rnsnavigator.example;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
@@ -15,7 +15,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "YYNavigatorExample";
+        return "RNSNavigatorExample";
     }
 
     /**

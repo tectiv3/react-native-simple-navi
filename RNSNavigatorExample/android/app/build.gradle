@@ -80,7 +80,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.yynavigatorexample"
+        applicationId "com.rnsnavigator.example"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1

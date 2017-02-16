@@ -12,17 +12,17 @@ import React, {
   ScrollView,
 } from 'react-native';
 
-import YYNavigator from 'react-native-yynavigator';
+import RNSNavigator from 'react-native-simple-navi';
 let {
     NavigationController,
     NavigatorMixin,
     NavigationButton
-} = YYNavigator;
+} = RNSNavigator;
 // import NavigationController from './Navigation/NavigationController';
 // import NavigationButton from './Navigation/NavigationButton';
 // import NavigatorMixin from './Navigation/NavigatorMixin';
 
-class YYNavigatorExample extends Component {
+class RNSNavigatorExample extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('YYNavigatorExample', () => YYNavigatorExample);
+AppRegistry.registerComponent('RNSNavigatorExample', () => RNSNavigatorExample);

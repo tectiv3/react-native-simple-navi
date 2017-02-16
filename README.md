@@ -1,5 +1,5 @@
-# React-native-yynavigator
+# React-native-simple-navi
 
 ## Install
 
-`npm install react-native-yynavigator --save`
+`npm i --save react-native-simple-navi`
