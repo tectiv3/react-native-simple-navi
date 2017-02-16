@@ -271,7 +271,8 @@ export default class NavigationController extends React.Component {
                 <NavigationBar navigator={navigator}
                                style={this.props.navbarStyle}
                                titleStyle={this.props.titleStyle}
-							   buttonStyle={this.props.buttonStyle}
+                               buttonStyle={this.props.buttonStyle}
+                               textStyle={this.props.textStyle}
                                currentRoute={this.state.route}
                                rightBarItem={this.props.rightBarItem}
                                leftBarItem={this.props.leftBarItem}

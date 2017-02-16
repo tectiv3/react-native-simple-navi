@@ -70,6 +70,7 @@ class NavigationBar extends React.Component {
                       rightBarItem={this.props.rightBarItem}
                       titleBarItem={this.props.titleBarItem}
                       titleStyle={this.props.titleStyle}
+					  textStyle={this.props.textStyle}
 					  buttonStyle={this.props.buttonStyle}
                       leftProps={this.props.leftProps}
                       rightProps={this.props.rightProps}
@@ -118,7 +119,7 @@ class BarContent extends React.Component {
                     {
                         fromValue: this.props.willDisappear ? 1 : 0,
                         toValue: this.props.willDisappear ? 0 : 1,
-                        duration: 300,
+                        duration: 100,
                         easing: Easing.easeOutQuad,
                         useNativeDriver: true
                     }
@@ -154,7 +155,7 @@ class BarContent extends React.Component {
         var leftBarItem, leftBarItemContent = null;
         if (this.props.route.leftBarItem) {
             let LeftComponent = this.props.route.leftBarItem;
-            leftBarItemContent = <LeftComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} buttonStyle={this.props.buttonStyle} {...this.props.leftProps}/>;
+            leftBarItemContent = <LeftComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} textStyle={this.props.textStyle} buttonStyle={this.props.buttonStyle} {...this.props.leftProps}/>;
         } else if(this.props.route.index > 0) {
             leftBarItemContent = <NavigationButton barItemType={NavButton.BUTTON_IMAGE_ONLY} barItemImage={require('./icon_back.png')} onPress={()=>this.goBack()} buttonStyle={this.props.buttonStyle}/>;
         }
@@ -169,7 +170,7 @@ class BarContent extends React.Component {
         if (this.props.route.rightBarItem) {
             let RightComponent = this.props.route.rightBarItem;
             let rightProps = this.props.route.rightProps || this.props.rightProps;
-            rightBarItemContent = (<RightComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} buttonStyle={this.props.buttonStyle} {...rightProps}/>);
+            rightBarItemContent = (<RightComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} textStyle={this.props.textStyle} buttonStyle={this.props.buttonStyle} {...rightProps}/>);
         }
         rightBarItem = (
             <View style={[styles.barItem, styles.alignRight]}>
