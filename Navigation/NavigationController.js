@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 export default class NavigationController extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,23 +26,27 @@ export default class NavigationController extends React.Component {
         };
         this.routeStack = [];
     }
+
     componentWillMount() {
         this.state.route = this.props.initialRoute;
         this.routeStack.push(this.props.initialRoute);
     }
+
     componentDidMount() {
         this._navigator = this.refs["navigator"];
-        this.refs["navigator"].navigationContext.addListener('willfocus', (event)=>{
+        this.refs["navigator"].navigationContext.addListener('willfocus', (event) => {
             const route = event.data.route;
             this.willFocus(route);
         });
     }
+
     componentWillReceiveProps(newProps) {
         if (this.props.initialRoute.component != newProps.initialRoute.component) {
             this.resetTo(newProps.initialRoute);
         }
     }
-    willFocus(route){
+
+    willFocus(route) {
         if (route.index) {
             if (route.index >= this.routeStack.length) {
                 this.routeStack.push(route);
@@ -56,7 +61,11 @@ export default class NavigationController extends React.Component {
             this.routeStack.push(route);
             this.setState({route: route});
         }
+        if (route.scene && route.scene.willFocus) {
+            route.scene.willFocus(route);
+        }
     }
+
     onBack(navigator) {
         if (this.state.route.index > 0) {
             this.routeStack.pop();
@@ -90,7 +99,11 @@ export default class NavigationController extends React.Component {
     }
 
     setTitleProps(props) {
-        this.setState({titleProps: props});
+        let route = {...this.state.route, titleProps: props};
+        let currentRoute = this._navigator.getCurrentRoutes();
+        currentRoute[currentRoute.length - 1].titleProps = props;
+        this.routeStack[this.routeStack.length - 1].titleProps = props;
+        this.setState({route});
     }
 
     setTitle(title) {
@@ -257,7 +270,9 @@ export default class NavigationController extends React.Component {
         return (
             <View style={[styles.container, this.props.itemWrapperStyle, extraStyling]}
             >
-                <Content name={route.title}
+                <Content
+                    ref={(component) => {route.scene = component;}}
+                    name={route.title}
                     index={route.index}
                     navigator={navigator}
                     navigationController={self}
@@ -301,10 +316,6 @@ export default class NavigationController extends React.Component {
                                buttonStyle={this.props.buttonStyle}
                                textStyle={this.props.textStyle}
                                currentRoute={this.state.route}
-                               rightBarItem={this.state.route.rightBarItem}
-                               leftBarItem={this.state.route.leftBarItem}
-                               titleBarItem={this.state.route.titleBarItem}
-                               titleProps={this.state.titleProps}
                                goForward={this.onForward.bind(this)}
                                goBack={this.onBack.bind(this)}
                                customAction={this.customAction.bind(this)}
@@ -329,9 +340,6 @@ NavigationController.propTypes = {
     initalRoute: React.PropTypes.object,
     navbarStyle: View.propTypes.style,
     itemWrapperStyle: View.propTypes.style,
-    rightBarItem: React.PropTypes.element,
-    leftBarItem: React.PropTypes.element,
-    titleBarItem: React.PropTypes.element,
 };
 
 var styles = Object.assign({}, NavStyles);

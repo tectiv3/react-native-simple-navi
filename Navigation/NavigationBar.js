@@ -69,12 +69,9 @@ export default class NavigationBar extends React.Component {
         }
         let navbarContent = (
             <BarContent route={this.props.currentRoute}
-                rightBarItem={this.props.rightBarItem}
-                titleBarItem={this.props.titleBarItem}
                 titleStyle={this.props.titleStyle}
                 textStyle={this.props.textStyle}
                 buttonStyle={this.props.buttonStyle}
-                titleProps={this.props.titleProps}
                 goBack={this.goBack.bind(this)}
                 goForward={this.goForward.bind(this)}
                 customAction={this.customAction.bind(this)}

@@ -67,7 +67,7 @@ export default class BarContent extends React.Component {
     render () {
         var transitionStyle = {
             opacity: this.state.opacity
-        };
+        }
         if (this.props.route.hideNavigationBar) {
             return (
                 <Animated.View style={[styles.navbar, this.props.route.headerStyle, transitionStyle, {borderBottomWidth:0}]}>
@@ -103,7 +103,7 @@ export default class BarContent extends React.Component {
 
         if (this.props.route.titleBarItem) {
             let titleComponent = this.props.route.titleBarItem;
-            titleBarItemContent = <titleComponent {...this.props.titleProps} />
+            titleBarItemContent = <titleComponent {...this.props.route.titleProps} />
         } else {
             titleBarItemContent = (
                 <Text numberOfLines={1}
@@ -119,11 +119,11 @@ export default class BarContent extends React.Component {
             </View>
         );
         return (
-            <Animated.View style={[styles.navbar, this.props.route.headerStyle, transitionStyle]}>
+            <View style={[styles.navbar, this.props.route.headerStyle]}>
                 {leftBarItem}
                 {titleBarItem}
                 {rightBarItem}
-            </Animated.View>
+            </View>
         );
     }
 
