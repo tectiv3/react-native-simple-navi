@@ -1,7 +1,7 @@
 'use strict';
-import React from 'react-native'
+import React, {Component} from 'react';
 
-var {
+import {
   Navigator,
     View,
   Text,
@@ -12,7 +12,7 @@ var {
     Easing,
     BackAndroid,
     Platform,
-} = React;
+} from 'react-native';
 
 import NavigationButton, * as NavButton from './NavigationButton'
 import NavStyles from './styles';
@@ -70,6 +70,7 @@ class NavigationBar extends React.Component {
                       rightBarItem={this.props.rightBarItem}
                       titleBarItem={this.props.titleBarItem}
                       titleStyle={this.props.titleStyle}
+					  buttonStyle={this.props.buttonStyle}
                       leftProps={this.props.leftProps}
                       rightProps={this.props.rightProps}
                       titleProps={this.props.titleProps}
@@ -118,7 +119,8 @@ class BarContent extends React.Component {
                         fromValue: this.props.willDisappear ? 1 : 0,
                         toValue: this.props.willDisappear ? 0 : 1,
                         duration: 300,
-                        easing: Easing.easeOutQuad
+                        easing: Easing.easeOutQuad,
+                        useNativeDriver: true
                     }
                 ).start();
             }, 0
@@ -155,8 +157,9 @@ class BarContent extends React.Component {
             let LeftComponent = this.props.route.leftBarItem;
             leftBarItemContent = <LeftComponent goForward={this.goForward.bind(this)} customAction={this.customAction.bind(this)} {...this.props.leftProps}/>;
         } else if(this.props.route.index > 0) {
-            leftBarItemContent = <NavigationButton barItemType={NavButton.BUTTON_IMAGE_ONLY} barItemImage={require('./icon_back.png')} onPress={()=>this.goBack()}/>;
+            leftBarItemContent = <NavigationButton barItemType={NavButton.BUTTON_IMAGE_ONLY} barItemImage={require('./icon_back.png')} onPress={()=>this.goBack()} imageStyle={this.props.buttonStyle}/>;
         }
+
         leftBarItem = (
             <View style={[styles.barItem, styles.alignLeft]}>
                 {leftBarItemContent}

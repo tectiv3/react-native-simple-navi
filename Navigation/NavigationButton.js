@@ -1,20 +1,20 @@
 'use strict'
 
-import React from 'react-native'
+import React, {Component} from 'react';
 
-var {
+import {
   View,
   Text,
   Image,
   TouchableOpacity,
-    TouchableHighlight,
+  TouchableHighlight,
   StyleSheet
-} = React;
+} from 'react-native';
 
 export const BUTTON_TEXT_ONLY = 1;
 export const BUTTON_IMAGE_ONLY = 2;
 
-class NavigationButton extends React.Component {
+class NavigationButton extends Component {
   static defaultProps = {
     barItemType: BUTTON_TEXT_ONLY,
     onBarButtonPressed: Function,
@@ -38,9 +38,9 @@ class NavigationButton extends React.Component {
     }
 
     return (
-      <TouchableHighlight  onPress={()=>this.onPress()} underlayColor="transparent" {...this.props}>
+      <TouchableOpacity  onPress={()=>this.onPress()} underlayColor="transparent" {...this.props}>
         {button}
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
 
   }
@@ -62,7 +62,7 @@ class NavigationButton extends React.Component {
     let imgSrc = this.props.barItemImage;
     return (
           <View>
-            <Image style={[styles.navBarBtnImg, this.props.imageStyle]} source={imgSrc}/>
+              <Image style={[styles.navBarBtnImg, this.props.imageStyle]} resizeMode='contain' source={imgSrc}/>
           </View>
     );
   }

@@ -1,22 +1,17 @@
-/**
- * Created by yiyang on 16/1/18.
- */
-
 'use strict';
 
-import React from 'react-native'
+import React from 'react';
 
 import NavigationBar from './NavigationBar';
 import NavStyles from './styles';
 
-let {
+import {
     StyleSheet,
     Navigator,
-    StatusBarIOS,
     View,
     Platform,
     StatusBar
-    } = React;
+} from 'react-native';
 
 export default class NavigationController extends React.Component {
     constructor(props) {
@@ -162,13 +157,26 @@ export default class NavigationController extends React.Component {
         };
 
         var popToRoute = function(route) {
+            if (!route) {
+                return;
+            }
+            if ((route.index === null || route.index === undefined)  && !route.component) {
+                return;
+            }
             let routeStack = navigator.getCurrentRoutes();
             if (routeStack.indexOf(route) == -1) {
                 for (let i = routeStack.length - 1; i>=0; i--) {
                     let r = routeStack[i];
-                    if (r.component == route.component) {
-                        navigator.popToRoute(r);
-                        return;
+                    if (!route.component) {
+                        if (r.index === route.index || (!r.index && route.index === 0)) {
+                            navigator.popToRoute(r);
+                            return;
+                        }
+                    } else {
+                        if (r.component == route.component) {
+                            navigator.popToRoute(r);
+                            return;
+                        }
                     }
                 }
             } else {
@@ -245,31 +253,25 @@ export default class NavigationController extends React.Component {
     render() {
         var navigationBar;
         // Status bar color
-        if (Platform.OS === 'ios') {
-            if (this.props.statusBarColor === 'black') {
-                StatusBarIOS.setStyle(0);
-            } else {
-                StatusBarIOS.setStyle(1);
-            }
-        } else if (Platform.OS === 'android') {
-            // no android version yet
-        }
-        let statusBar;
-        // if (StatusBar && (!this.props.hideNavigationBar && !this.state.route.hideNavigationBar)) {
-        //     let color = '#5589B7';
-        //     if (this.props.navbarStyle && this.props.navbarStyle.backgroundColor) {
-        //         color = this.props.navbarStyle.backgroundColor;
+		// var StatusBarStyle = 'black';
+        // if (Platform.OS === 'ios') {
+        //     if (this.props.statusBarColor === 'black') {
+        //         StatusBarStyle = 'black';
+        //     } else {
+		// 		StatusBarStyle = 'light-content'
         //     }
-        //     statusBar = (
-        //         <StatusBar backgroundColor={color}  translucent={true} />
-        //     );
         // }
 
         if (!this.props.hideNavigationBar) {
             navigationBar = (
+                // <StatusBar
+                //     barStyle={StatusBarStyle}
+                //     animated={true}
+                // />
                 <NavigationBar navigator={navigator}
                                style={this.props.navbarStyle}
                                titleStyle={this.props.titleStyle}
+							   buttonStyle={this.props.buttonStyle}
                                currentRoute={this.state.route}
                                rightBarItem={this.props.rightBarItem}
                                leftBarItem={this.props.leftBarItem}
@@ -286,7 +288,6 @@ export default class NavigationController extends React.Component {
 
         return (
             <View style={{flex: 1}}>
-                {statusBar}
                 <Navigator initialRoute={this.props.initialRoute}
                            navigationBar={navigationBar}
                            ref="navigator"
